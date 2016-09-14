@@ -59,15 +59,26 @@ module SimpleCalendar
         @options[:partial] || self.class.name.underscore
       end
 
-      def attribute
-        options.fetch(:attribute, :start_time).to_sym
+      def start_attribute
+        options.fetch(:start_attribute, :start_time).to_sym
+      end
+
+      def end_attribute
+        options.fetch(:end_attribute, :start_time).to_sym
       end
 
       def sorted_events
-        events = options.fetch(:events, []).sort_by(&attribute)
+        events = options.fetch(:events, []).sort_by(&start_attribute)
 
-        scheduled = events.reject { |e| e.send(attribute).nil? }
-        scheduled.group_by { |e| e.send(attribute).to_date }
+        scheduled_events = events.reject { |e| e.send(start_attribute).nil? || e.send(end_attribute).nil? }
+        separated_events = {}
+        scheduled_events.each do |event|
+          event_date_range.each do |date|
+            separated_events[date] ||= []
+            separated_events[date] << event
+          end
+        end
+        separated_events
       end
 
       def start_date

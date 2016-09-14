@@ -73,7 +73,7 @@ module SimpleCalendar
         scheduled_events = events.reject { |e| e.send(start_attribute).nil? || e.send(end_attribute).nil? }
         separated_events = {}
         scheduled_events.each do |event|
-          event_date_range = event.send(start_attribute)to_date..event.send(end_attribute).to_date
+          event_date_range = event.send(start_attribute).to_date..event.send(end_attribute).to_date
           event_date_range.each do |date|
             separated_events[date] ||= []
             separated_events[date] << event

@@ -64,7 +64,7 @@ module SimpleCalendar
       end
 
       def end_attribute
-        options.fetch(:end_attribute, :start_time).to_sym
+        options.fetch(:end_attribute, :end_time).to_sym
       end
 
       def sorted_events

@@ -14,5 +14,17 @@ module SimpleCalendar
       raise 'week_calendar requires a block' unless block_given?
       SimpleCalendar::WeekCalendar.new(self, options).render(&block)
     end
+
+    def hour_range(start_date)
+      starting = start_date.to_date
+      ending = start_date.to_time + 1.day
+
+      changing = starting
+      range = []
+      while changing < ending
+        range << changing
+      end
+      range
+    end
   end
 end

@@ -89,7 +89,7 @@ module SimpleCalendar
           view_context.params.fetch(:start_date, Date.current).to_date
         end
       end
-
+      
       def date_range
         (start_date..(start_date + additional_days.days)).to_a
       end

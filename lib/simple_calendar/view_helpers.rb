@@ -23,6 +23,7 @@ module SimpleCalendar
       range = []
       while changing < ending
         range << changing
+        changing += 1.hour
       end
       range
     end

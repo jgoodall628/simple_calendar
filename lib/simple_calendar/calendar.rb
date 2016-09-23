@@ -79,11 +79,11 @@ module SimpleCalendar
           changing = starting
           while changing < ending
 
-            separated_events[changing.beginning_of_day] ||= {events: []}
-            separated_events[changing.beginning_of_day][:events] << event
-            separated_events[changing.beginning_of_day][changing.beginning_of_hour] ||= {events: [], overlap_count: 0}
-            separated_events[changing.beginning_of_day][changing.beginning_of_hour][:events] << event
-            separated_events[changing.beginning_of_day][changing.beginning_of_hour][:overlap_count] += 1
+            separated_events[changing.beginning_of_day.to_date] ||= {events: []}
+            separated_events[changing.beginning_of_day.to_date][:events] << event
+            separated_events[changing.beginning_of_day.to_date][changing.beginning_of_hour.hour] ||= {events: [], overlap_count: 0}
+            separated_events[changing.beginning_of_day.to_date][changing.beginning_of_hour.hour][:events] << event
+            separated_events[changing.beginning_of_day.to_date][changing.beginning_of_hour.hour][:overlap_count] += 1
 
             changing += 1.hour
           end

@@ -75,7 +75,7 @@ module SimpleCalendar
         scheduled_events.each do |event|
 
           starting = event.send(start_attribute).beginning_of_hour
-          ending = event.send(end_attribute).end_of_hour
+          ending = event.send(end_attribute).beginning_of_hour
           changing = starting
           while changing < ending
 

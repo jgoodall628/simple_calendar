@@ -89,16 +89,16 @@ module SimpleCalendar
             changing += 1.hour
           end
         end
-        separated_events.each do |day, events|
-          day[:hours].each do |hour, events|
+        separated_events.each do |day, container|
+          container[:hours].each do |hour, events|
             hour_count = events.count
             events.each do |event|
-              day_count = day[:events][event]
-              day[:events][event] = [day_count, hour_count].max
+              day_count = container[:events][event]
+              container[:events][event] = [day_count, hour_count].max
             end
           end
         end
-        
+
         separated_events
       end
 

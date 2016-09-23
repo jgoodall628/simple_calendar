@@ -79,20 +79,26 @@ module SimpleCalendar
           changing = starting
           while changing < ending
 
-            separated_events[changing.beginning_of_day.to_date] ||= {events: {}}
+            separated_events[changing.beginning_of_day.to_date] ||= {events: {}, hours: {}}
             separated_events[changing.beginning_of_day.to_date][:events][event] ||= 1
-            separated_events[changing.beginning_of_day.to_date][changing.beginning_of_hour.hour] ||= []
-            separated_events[changing.beginning_of_day.to_date][changing.beginning_of_hour.hour] << event
+            separated_events[changing.beginning_of_day.to_date][:hours][changing.beginning_of_hour.hour] ||= []
+            separated_events[changing.beginning_of_day.to_date][:hours][changing.beginning_of_hour.hour] << event
 
-            day_count = separated_events[changing.beginning_of_day.to_date][:events][event]
-            hour_count = separated_events[changing.beginning_of_day.to_date][changing.beginning_of_hour.hour].count
-
-            separated_events[changing.beginning_of_day.to_date][:events][event] = [day_count, hour_count].max
 
 
             changing += 1.hour
           end
         end
+        separated_events.each do |day, events|
+          day[:hours].each do |hour, events|
+            hour_count = events.count
+            events.each do |event|
+              day_count = day[:events][event]
+              day[:events][event] = [day_count, hour_count].max
+            end
+          end
+        end
+        
         separated_events
       end
 

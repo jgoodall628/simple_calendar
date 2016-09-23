@@ -73,10 +73,19 @@ module SimpleCalendar
         scheduled_events = events.reject { |e| e.send(start_attribute).nil? || e.send(end_attribute).nil? }
         separated_events = {}
         scheduled_events.each do |event|
-          event_date_range = event.send(start_attribute).to_date..event.send(end_attribute).to_date
-          event_date_range.each do |date|
-            separated_events[date] ||= []
-            separated_events[date] << event
+
+          starting = event.send(start_attribute).beginning_of_hour
+          ending = event.send(end_attribute).end_of_hour
+          changing = starting
+          while changing < ending
+
+            separated_events[changing.beginning_of_day] ||= {events: []}
+            separated_events[changing.beginning_of_day][:events] << event
+            separated_events[changing.beginning_of_day][changing.beginning_of_hour] ||= {events: [], overlap_count: 0}
+            separated_events[changing.beginning_of_day][changing.beginning_of_hour][:events] << event
+            separated_events[changing.beginning_of_day][changing.beginning_of_hour][:overlap_count] += 1
+
+            changing += 1.hour
           end
         end
         separated_events
@@ -89,7 +98,7 @@ module SimpleCalendar
           view_context.params.fetch(:start_date, Date.current).to_date
         end
       end
-      
+
       def date_range
         (start_date..(start_date + additional_days.days)).to_a
       end

@@ -79,8 +79,8 @@ module SimpleCalendar
           changing = starting
           while changing < ending
 
-            separated_events[changing.beginning_of_day.to_date] ||= {}
-            separated_events[changing.beginning_of_day.to_date][event] ||= 1
+            separated_events[changing.beginning_of_day.to_date] ||= {events: {}}
+            separated_events[changing.beginning_of_day.to_date][:events][event] ||= 1
             separated_events[changing.beginning_of_day.to_date][changing.beginning_of_hour.hour] ||= []
             separated_events[changing.beginning_of_day.to_date][changing.beginning_of_hour.hour] << event
 

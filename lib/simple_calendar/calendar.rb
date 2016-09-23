@@ -84,10 +84,10 @@ module SimpleCalendar
             separated_events[changing.beginning_of_day.to_date][changing.beginning_of_hour.hour] ||= []
             separated_events[changing.beginning_of_day.to_date][changing.beginning_of_hour.hour] << event
 
-            day_count = separated_events[changing.beginning_of_day.to_date][:event][event]
+            day_count = separated_events[changing.beginning_of_day.to_date][:events][event]
             hour_count = separated_events[changing.beginning_of_day.to_date][changing.beginning_of_hour.hour].count
 
-            separated_events[changing.beginning_of_day.to_date][:event][event] = [day_count, hour_count].max
+            separated_events[changing.beginning_of_day.to_date][:events][event] = [day_count, hour_count].max
 
 
             changing += 1.hour

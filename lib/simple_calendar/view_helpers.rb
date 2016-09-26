@@ -15,6 +15,11 @@ module SimpleCalendar
       SimpleCalendar::WeekCalendar.new(self, options).render(&block)
     end
 
+    def day_calendar(options={}, &block)
+      raise 'day_calendar requires a block' unless block_given?
+      SimpleCalendar::DayCalendar.new(self, options).render(&block)
+    end
+
     def hour_range(start_date)
       starting = start_date.to_date
       ending = start_date.to_time + 1.day

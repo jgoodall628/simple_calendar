@@ -77,7 +77,7 @@ module SimpleCalendar
           starting = event.send(start_attribute).beginning_of_hour
           ending = event.send(end_attribute).beginning_of_hour
           changing = starting
-          while changing < ending
+          while changing <= ending
 
             separated_events[changing.beginning_of_day.to_date] ||= {events: {}, hours: {}}
             separated_events[changing.beginning_of_day.to_date][:events][event] ||= 1
